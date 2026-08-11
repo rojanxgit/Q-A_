@@ -14,6 +14,7 @@
 <div class="analysis hidden" id="analysis"><div class="analysis-inner"><div class="emoji">🧠</div><h1>Analyzing your results...</h1><p class="status" id="status">Gathering response data...</p><div class="spinner"></div><p class="status">Please don't close the page or minimize the browser.</p></div></div>
 <div class="final hidden" id="final"><div><div class="emoji">😂</div><h1 id="finalTitle">YOU GOT PRANKED! 💀</h1><p>You just wasted 20 seconds of your time. 😆</p></div></div>
 <audio id="comedy" preload="auto" src="Comedy.mp3"></audio>
+<audio id="sound2" preload="auto" src="sound2.mp3"></audio>
 <script>
 const questions=[
  ['🧠','Which matters most when making an important decision?','Choose honestly.',['Logic','Feelings','A balance of both']],
@@ -22,13 +23,14 @@ const questions=[
  ['🔍','When you notice a mistake you made, what do you usually do first?','Be honest.',['Fix it immediately','Figure out why it happened','Leave it and come back later']],
  ['🤔','Would you rather know the complete truth or stay comfortable?','Final question.',['Always know the truth','Stay comfortable','Depends on the situation']]
 ];
-let current=0,name='';const q=document.getElementById('question'),sub=document.getElementById('sub'),opts=document.getElementById('options'),emoji=document.getElementById('emoji'),count=document.getElementById('count'),audio=document.getElementById('comedy'),video=document.getElementById('prankVideo');
+let current=0,name='';const q=document.getElementById('question'),sub=document.getElementById('sub'),opts=document.getElementById('options'),emoji=document.getElementById('emoji'),count=document.getElementById('count'),audio=document.getElementById('comedy'),sound2=document.getElementById('sound2'),video=document.getElementById('prankVideo');
 function startQA(){name=document.getElementById('nameInput').value.trim()||'Mystery Person';document.getElementById('nameCard').classList.add('hidden');document.getElementById('card').classList.remove('hidden');render()}
 function render(){let x=questions[current];emoji.textContent=x[0];count.textContent=`QUESTION ${current+1} / 5`;q.textContent=current===0?`Ready, ${name}? ${x[1]}`:x[1];sub.textContent=x[2];opts.innerHTML='';x[3].forEach(t=>{let b=document.createElement('button');b.className='option';b.textContent=t;b.onclick=answer;opts.appendChild(b)})}
-function answer(){if(current===1){playAudioThenCinematic();return}if(current===2){document.getElementById('card').classList.add('hidden');showVideo();return}if(current===4){document.getElementById('card').classList.add('hidden');startAnalysis();return}current++;render()}
+function answer(){if(current===1){playAudioThenCinematic();return}if(current===2){document.getElementById('card').classList.add('hidden');showVideo();return}if(current===3){playSound2ThenNext();return}if(current===4){document.getElementById('card').classList.add('hidden');startAnalysis();return}current++;render()}
 function playAudioThenCinematic(){document.getElementById('card').classList.add('hidden');audio.currentTime=0;audio.onended=showCinematic;audio.play().catch(()=>{showCinematic()})}
 function showCinematic(){const c=document.getElementById('cinematic');c.classList.remove('hidden');setTimeout(()=>{c.classList.add('hidden');current=2;document.getElementById('card').classList.remove('hidden');render()},1400)}
 function showVideo(){const screen=document.getElementById('clipScreen');screen.classList.remove('hidden');video.currentTime=0;video.onended=finishVideo;video.play().catch(()=>{finishVideo()})}
 function finishVideo(){video.pause();document.getElementById('clipScreen').classList.add('hidden');current=3;render();document.getElementById('card').classList.remove('hidden')}
+function playSound2ThenNext(){document.getElementById('card').classList.add('hidden');sound2.currentTime=0;sound2.onended=()=>{current=4;document.getElementById('card').classList.remove('hidden');render()};sound2.play().catch(()=>{current=4;document.getElementById('card').classList.remove('hidden');render()})}
 function startAnalysis(){const analysis=document.getElementById('analysis'),status=document.getElementById('status');analysis.classList.remove('hidden');const messages=['Gathering response data...','Collecting behavioral patterns...','Comparing answer consistency...','Cross-checking response patterns...','Analyzing decision tendencies...','Compiling final assessment...','Finalizing your results...'];let i=0;status.textContent=messages[0];const timer=setInterval(()=>{i++;if(i<messages.length)status.textContent=messages[i]},2800);setTimeout(()=>{clearInterval(timer);analysis.classList.add('hidden');document.getElementById('final').classList.remove('hidden');document.getElementById('finalTitle').textContent=`${name}, YOU GOT PRANKED! 💀`},20000)}
 </script></body></html>
