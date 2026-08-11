@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q&A 🎁</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#fff;background:radial-gradient(circle at top,#383838,#111 60%,#050505);display:flex;align-items:center;justify-content:center;overflow:hidden}.card{width:min(92%,520px);text-align:center;padding:28px 20px}.emoji{font-size:68px;animation:float 2s ease-in-out infinite}.count{margin-top:12px;color:#aaa;font-size:13px;letter-spacing:2px}.question{font-size:clamp(27px,7vw,42px);margin:14px 0}.sub{color:#ccc;line-height:1.5;margin-bottom:25px}.options{display:grid;gap:12px}.option{border:1px solid #444;background:#ffffff12;color:#fff;border-radius:16px;padding:17px 14px;font-size:17px;font-weight:bold;cursor:pointer;transition:.2s}.option:hover{background:#ffffff22;transform:translateY(-2px)}.hidden{display:none!important}.final{position:fixed;inset:0;background:#050505;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px}.final h1{font-size:clamp(38px,12vw,76px);margin:0}.final p{font-size:20px;color:#ccc}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+<div class="emoji" id="emoji">🤔</div><div class="count" id="count">QUESTION 1 / 10</div><h1 class="question" id="question">Let's see how well you know me... 👀</h1><p class="sub" id="sub">Choose an answer and keep going 😌</p><div class="options" id="options"></div>
+</div>
+<div class="final hidden" id="final"><div><div class="emoji">😂</div><h1>YOU GOT PRANKED! 💀</h1><p>Thanks for making it all the way to Question 10 😭</p></div></div>
+<audio id="comedy" preload="auto"></audio>
+<script>
+const questions=[
+ ['🤔','Let’s see how well you know me... 👀','Pick one answer 😌',['😎 Obviously I know you','🤨 Maybe...','💀 I have no idea']],
+ ['🧐','What’s your favorite thing about me?','Be honest 😂',['😂 Your humor','😎 Your vibe','🤫 Can’t tell you']],
+ ['😏','Do you trust me?','This answer might matter later...',['❤️ Yes','🤔 Mostly','💀 Not anymore']],
+ ['🙃','Would you answer one random question?','Just say yes... 😭',['✅ Sure','😬 I guess','🚪 I want to leave']],
+ ['👀','Are you enjoying this?','We’re almost halfway there...',['😎 Definitely','😂 A little','🤨 What’s happening?']],
+ ['🤨','Do you think there’s actually a surprise?','Hmmmm...',['🎁 Yes','😂 Probably not','👀 Now I’m curious']],
+ ['😈','Do you still trust me?','Be careful with this one 😂',['❤️ Yes','😬 A little less','💀 Absolutely not']],
+ ['😭','Should I ask you one last question?','You’re almost there...',['🔥 YES','👀 Go ahead','💀 I regret this']],
+ ['🎧','Okay... ready?','Click ANY option. 👀',['😎 I’m ready','😂 Let’s go','💀 I have a bad feeling']],
+ ['🎁','Final question...','Are you ready for the actual surprise? 😭',['🔥 YES, SHOW ME!','👀 DO IT!','😂 I’M READY']]
+];
+let current=0;
+const q=document.getElementById('question'),sub=document.getElementById('sub'),opts=document.getElementById('options'),emoji=document.getElementById('emoji'),count=document.getElementById('count');
+const audio=document.getElementById('comedy');
+audio.src='Comedy.mp3';
+function render(){let x=questions[current];emoji.textContent=x[0];count.textContent=`QUESTION ${current+1} / 10`;q.textContent=x[1];sub.textContent=x[2];opts.innerHTML='';x[3].forEach(text=>{let b=document.createElement('button');b.className='option';b.textContent=text;b.onclick=()=>answer();opts.appendChild(b)})}
+function answer(){
+ if(current===8){audio.currentTime=0;audio.play().catch(()=>{});}
+ if(current===9){document.getElementById('card').classList.add('hidden');document.getElementById('final').classList.remove('hidden');return;}
+ current++;render();
+}
+render();
+</script>
+</body>
+</html>
