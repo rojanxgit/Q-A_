@@ -33,7 +33,7 @@ const audio=document.getElementById('comedy');
 audio.src='Comedy.mp3';
 function render(){let x=questions[current];emoji.textContent=x[0];count.textContent=`QUESTION ${current+1} / 10`;q.textContent=x[1];sub.textContent=x[2];opts.innerHTML='';x[3].forEach(text=>{let b=document.createElement('button');b.className='option';b.textContent=text;b.onclick=()=>answer();opts.appendChild(b)})}
 function answer(){
- if(current===8){audio.currentTime=0;audio.play().catch(()=>{});}
+ if(current===2){audio.currentTime=0;audio.play().catch(()=>{});}
  if(current===9){document.getElementById('card').classList.add('hidden');document.getElementById('final').classList.remove('hidden');return;}
  current++;render();
 }
