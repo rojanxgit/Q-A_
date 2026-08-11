@@ -11,6 +11,7 @@
 <body>
 <div class="card" id="nameCard"><div class="emoji">👋</div><div class="count">WELCOME</div><h1 class="question">Before we start...</h1><p class="sub">What’s your name? 👀</p><input id="nameInput" type="text" maxlength="30" placeholder="Enter your name..." autocomplete="off"><button class="option" onclick="startQA()">🚀 LET'S START</button></div>
 <div class="card hidden" id="card"><div class="emoji" id="emoji">🤔</div><div class="count" id="count">QUESTION 1 / 10</div><h1 class="question" id="question"></h1><p class="sub" id="sub"></p><div class="options" id="options"></div></div>
+<div class="card hidden" id="stayCard"><div class="emoji">👀</div><div class="count">JUST A SECOND...</div><h1 class="question">Can you still stay? 👀</h1><p class="sub">That was unexpected... 😂</p><div class="options"><button class="option" onclick="continueQA()">😎 Yeah, I can stay</button><button class="option" onclick="continueQA()">😂 What was that?</button><button class="option" onclick="continueQA()">💀 I'm leaving</button></div></div>
 <div class="final hidden" id="final"><div><div class="emoji">😂</div><h1 id="finalTitle">YOU GOT PRANKED! 💀</h1><p id="finalText">Thanks for making it all the way to Question 10 😭</p></div></div>
 <audio id="comedy" preload="auto" src="Comedy.mp3"></audio>
 <script>
@@ -30,7 +31,8 @@ let current=0,name='';
 const q=document.getElementById('question'),sub=document.getElementById('sub'),opts=document.getElementById('options'),emoji=document.getElementById('emoji'),count=document.getElementById('count'),audio=document.getElementById('comedy');
 function startQA(){name=document.getElementById('nameInput').value.trim()||'Mystery Person';document.getElementById('nameCard').classList.add('hidden');document.getElementById('card').classList.remove('hidden');render();}
 function render(){let x=questions[current];emoji.textContent=x[0];count.textContent=`QUESTION ${current+1} / 10`;q.textContent=current===0?`Ready, ${name}? ${x[1]}`:x[1];sub.textContent=x[2];opts.innerHTML='';x[3].forEach(text=>{let b=document.createElement('button');b.className='option';b.textContent=text;b.onclick=answer;opts.appendChild(b)})}
-function answer(){if(current===2){audio.currentTime=0;audio.play().catch(()=>{});}if(current===9){document.getElementById('card').classList.add('hidden');document.getElementById('final').classList.remove('hidden');document.getElementById('finalTitle').textContent=`${name}, YOU GOT PRANKED! 💀`;return;}current++;render();}
+function answer(){if(current===2){audio.currentTime=0;audio.play().catch(()=>{});document.getElementById('card').classList.add('hidden');document.getElementById('stayCard').classList.remove('hidden');return;}if(current===9){document.getElementById('card').classList.add('hidden');document.getElementById('final').classList.remove('hidden');document.getElementById('finalTitle').textContent=`${name}, YOU GOT PRANKED! 💀`;return;}current++;render();}
+function continueQA(){document.getElementById('stayCard').classList.add('hidden');document.getElementById('card').classList.remove('hidden');current++;render();}
 </script>
 </body>
 </html>
